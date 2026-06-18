@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Instagram, Globe, ShoppingCart, Menu, X } from 'lucide-react';
+import { Instagram, Globe, ShoppingCart, Menu, X, ChevronUp, Lock } from 'lucide-react';
 
 const INK = '#1a1a1a';
 const CREAM = '#f8f4ec';
@@ -9,6 +9,9 @@ const LaGratinade = () => {
   const [language, setLanguage] = useState('fr');
   const [showLangMenu, setShowLangMenu] = useState(false);
   const [showMobileMenu, setShowMobileMenu] = useState(false);
+  const [unlocked, setUnlocked] = useState(false);
+  const [loaderVisible, setLoaderVisible] = useState(true);
+  const [loaderFading, setLoaderFading] = useState(false);
 
   const translations = {
     fr: {
@@ -73,6 +76,15 @@ const LaGratinade = () => {
     };
   }, []);
 
+  useEffect(() => {
+    const fadeTimer = setTimeout(() => setLoaderFading(true), 1300);
+    const removeTimer = setTimeout(() => setLoaderVisible(false), 2000);
+    return () => {
+      clearTimeout(fadeTimer);
+      clearTimeout(removeTimer);
+    };
+  }, []);
+
   const scrollToMenu = () => {
     document.getElementById('menu').scrollIntoView({ behavior: 'smooth' });
     setShowMobileMenu(false);
@@ -100,6 +112,26 @@ const LaGratinade = () => {
 
   return (
     <div className="min-h-screen overflow-hidden" style={{ backgroundColor: CREAM, color: INK, fontFamily: "'Montserrat', sans-serif" }} dir={isArabic ? 'rtl' : 'ltr'}>
+      {/* LOADER */}
+      {loaderVisible && (
+        <div
+          className={`fixed inset-0 z-[100] flex items-center justify-center transition-opacity duration-700 ${loaderFading ? 'opacity-0' : 'opacity-100'}`}
+          style={{ backgroundColor: CREAM }}
+        >
+          <div className="text-center">
+            <span
+              className="inline-block animate-pulse"
+              style={{ fontFamily: "'Allura', cursive", fontSize: '4rem', color: INK }}
+            >
+              La Gratinade
+            </span>
+            <div className="mt-3 text-[10px] tracking-[0.35em]" style={{ color: 'rgba(26,26,26,0.5)' }}>
+              {language === 'ar' ? 'جاري التحميل' : language === 'en' ? 'LOADING' : 'CHARGEMENT'}
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* NAVBAR */}
       <nav className="fixed w-full z-50 backdrop-blur border-b" style={{ backgroundColor: 'rgba(248,244,236,0.92)', borderColor: 'rgba(26,26,26,0.12)' }}>
         <div className="max-w-6xl mx-auto px-4 md:px-6 py-3 flex justify-between items-center">
@@ -213,16 +245,60 @@ const LaGratinade = () => {
           </h2>
         </div>
 
-        <div className="rounded-lg border p-4 md:p-8 mb-8 md:mb-12" style={{ backgroundColor: '#fff', borderColor: 'rgba(26,26,26,0.12)' }}>
-          <div className="flex justify-center">
+        <div className="flex justify-center mb-8 md:mb-12">
+          <div
+            className="relative"
+            style={{ width: 'min(320px, 80vw)', aspectRatio: '9 / 19.5' }}
+          >
             <div
-              data-wegemo="8d26d2e2-4f0d-41be-9743-634a677e7873"
-              data-table="0"
-              data-label="🛒 Commander"
-              data-color={INK}
-              data-name="Médina Tacos"
-              style={{ minHeight: '600px', width: '100%' }}
-            ></div>
+              className="absolute inset-0 rounded-[2.5rem] overflow-hidden shadow-2xl"
+              style={{ border: `10px solid ${INK}`, backgroundColor: '#fff' }}
+            >
+              {/* notch */}
+              <div
+                className="absolute top-0 left-1/2 -translate-x-1/2 w-28 h-5 rounded-b-2xl z-30"
+                style={{ backgroundColor: INK }}
+              />
+
+              {/* widget layer - always mounted so the embed script can bind to it */}
+              <div className="absolute inset-0 overflow-y-auto pt-7 px-3 pb-4">
+                <div
+                  data-wegemo="8d26d2e2-4f0d-41be-9743-634a677e7873"
+                  data-table="0"
+                  data-label="🛒 Commander"
+                  data-color={INK}
+                  data-name="Médina Tacos"
+                  style={{ minHeight: '100%', width: '100%' }}
+                ></div>
+              </div>
+
+              {/* lock screen overlay */}
+              <div
+                className={`absolute inset-0 z-20 flex flex-col items-center justify-between pt-16 pb-8 px-6 transition-all duration-700 ease-in-out ${
+                  unlocked ? 'opacity-0 -translate-y-full pointer-events-none' : 'opacity-100 translate-y-0'
+                }`}
+                style={{ backgroundColor: CREAM }}
+              >
+                <div className="text-center mt-6">
+                  <span style={{ fontFamily: "'Allura', cursive", fontSize: '2.25rem', color: INK }}>
+                    {t.brand}
+                  </span>
+                  <Ribbon className="mt-2">{t.subtitle}</Ribbon>
+                </div>
+
+                <div className="flex flex-col items-center gap-3">
+                  <ChevronUp size={18} className="animate-bounce" style={{ color: 'rgba(26,26,26,0.5)' }} />
+                  <button
+                    onClick={() => setUnlocked(true)}
+                    className="flex items-center gap-2 px-8 py-3 rounded-full text-sm font-medium tracking-[0.15em] transition-all hover:scale-105"
+                    style={{ backgroundColor: INK, color: CREAM }}
+                  >
+                    <Lock size={14} />
+                    {t.discover}
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
