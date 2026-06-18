@@ -4,6 +4,7 @@ import gratinade1 from './assets/gallery/gratinade-1.jpg';
 import gratinade2 from './assets/gallery/gratinade-2.jpg';
 import gratinade3 from './assets/gallery/gratinade-3.jpg';
 import gratinade4 from './assets/gallery/gratinade-4.jpg';
+import gratinade5 from './assets/gallery/gratinade-5.jpg';
 
 const INK = '#1a1a1a';
 const CREAM = '#f8f4ec';
@@ -265,14 +266,6 @@ const LaGratinade = () => {
           </h2>
         </div>
 
-        <div className="grid grid-cols-2 gap-2 md:gap-3 max-w-md mx-auto mb-8 md:mb-12">
-          {[gratinade1, gratinade2, gratinade3, gratinade4].map((src, i) => (
-            <div key={i} className="aspect-square overflow-hidden rounded-lg shadow-md">
-              <img src={src} alt={`La Gratinade ${i + 1}`} className="w-full h-full object-cover" />
-            </div>
-          ))}
-        </div>
-
         <div className="flex justify-center mb-8 md:mb-12">
           <div
             className="relative transition-all duration-700 ease-in-out"
@@ -301,6 +294,14 @@ const LaGratinade = () => {
                     {t.brand}
                   </span>
                   <Ribbon className="mt-2">{t.subtitle}</Ribbon>
+                </div>
+
+                <div className="grid grid-cols-2 gap-1.5 w-full px-2">
+                  {[gratinade1, gratinade5, gratinade2, gratinade3].map((src, i) => (
+                    <div key={i} className="aspect-square overflow-hidden rounded-md shadow-sm">
+                      <img src={src} alt={`La Gratinade ${i + 1}`} className="w-full h-full object-cover" />
+                    </div>
+                  ))}
                 </div>
 
                 <div className="flex flex-col items-center gap-3">
