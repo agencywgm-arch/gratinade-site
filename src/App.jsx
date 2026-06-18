@@ -93,7 +93,9 @@ const LaGratinade = () => {
 
   // The Wegemo widget renders its own launcher button and opens its menu in a
   // separate full-screen modal, so we keep the real widget hidden off-screen
-  // and forward the click from our decorative "unlock" button to it.
+  // and forward the click from our decorative "unlock" button to it. The
+  // unlock animation is momentary - the phone resets so it can be reopened
+  // once the user closes the Wegemo modal (which gives us no close callback).
   const handleUnlock = () => {
     setUnlocked(true);
     setTimeout(() => {
@@ -101,6 +103,7 @@ const LaGratinade = () => {
       const trigger = el?.querySelector('button, a, [role="button"]') || el;
       trigger?.click();
     }, 550);
+    setTimeout(() => setUnlocked(false), 900);
   };
 
   // Ribbon-style banner echoing the storefront sign's "CUISINE GOURMANDE" subtitle
