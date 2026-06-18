@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Instagram, Globe, ShoppingCart, Menu, X, ChevronUp, Lock } from 'lucide-react';
 import phoneMenu from './assets/gallery/phone-menu.png';
 
@@ -13,6 +13,7 @@ const LaGratinade = () => {
   const [unlocked, setUnlocked] = useState(false);
   const [loaderVisible, setLoaderVisible] = useState(true);
   const [loaderFading, setLoaderFading] = useState(false);
+  const wegemoRef = useRef(null);
 
   const translations = {
     fr: {
@@ -91,7 +92,20 @@ const LaGratinade = () => {
     setShowMobileMenu(false);
   };
 
-  const handleUnlock = () => setUnlocked(true);
+  // The Wegemo widget renders its own launcher button and opens its menu in a
+  // separate full-screen modal, so we keep the real widget hidden off-screen
+  // and forward the click from our decorative "unlock" button to it. The
+  // unlock animation is momentary - the phone resets so it can be reopened
+  // once the user closes the Wegemo modal (which gives us no close callback).
+  const handleUnlock = () => {
+    setUnlocked(true);
+    setTimeout(() => {
+      const el = wegemoRef.current;
+      const trigger = el?.querySelector('button, a, [role="button"]') || el;
+      trigger?.click();
+    }, 550);
+    setTimeout(() => setUnlocked(false), 900);
+  };
 
   // Ribbon-style banner echoing the storefront sign's "CUISINE GOURMANDE" subtitle
   const Ribbon = ({ children, className = '' }) => (
@@ -250,46 +264,49 @@ const LaGratinade = () => {
 
         <div className="flex justify-center mb-8 md:mb-12">
           <div
-            className="relative"
-            style={{ width: 'min(320px, 80vw)', aspectRatio: '858 / 1832' }}
+            className="relative transition-all duration-700 ease-in-out"
+            style={{
+              width: 'min(320px, 80vw)',
+              aspectRatio: '858 / 1832',
+              opacity: unlocked ? 0 : 1,
+              transform: unlocked ? 'scale(0.92)' : 'scale(1)',
+              pointerEvents: unlocked ? 'none' : 'auto'
+            }}
           >
             <div className="absolute inset-0 rounded-[2.5rem] overflow-hidden shadow-2xl">
-              {/* widget layer - always mounted inside the phone frame so the embed script can bind to it */}
-              <div className="absolute inset-0 overflow-y-auto">
-                <div
-                  data-wegemo="8d26d2e2-4f0d-41be-9743-634a677e7873"
-                  data-table="0"
-                  data-label="🛒 Commander"
-                  data-color={INK}
-                  data-name="Médina Tacos"
-                  style={{ minHeight: '100%', width: '100%' }}
-                ></div>
-              </div>
-
               {/* lock screen */}
-              <div
-                className={`absolute inset-0 z-20 transition-all duration-700 ease-in-out ${
-                  unlocked ? 'opacity-0 -translate-y-full pointer-events-none' : 'opacity-100 translate-y-0'
-                }`}
-              >
-                <img src={phoneMenu} alt={t.brand} className="absolute inset-0 w-full h-full object-cover" />
+              <img src={phoneMenu} alt={t.brand} className="absolute inset-0 w-full h-full object-cover" />
 
-                <div
-                  className="absolute bottom-0 left-0 right-0 flex flex-col items-center gap-3 pt-10 pb-6"
-                  style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.55), transparent)' }}
+              <div
+                className="absolute bottom-0 left-0 right-0 flex flex-col items-center gap-3 pt-10 pb-6"
+                style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.55), transparent)' }}
+              >
+                <ChevronUp size={18} className="animate-bounce" style={{ color: 'rgba(255,255,255,0.8)' }} />
+                <button
+                  onClick={handleUnlock}
+                  className="flex items-center gap-2 px-8 py-3 rounded-full text-sm font-medium tracking-[0.15em] transition-all hover:scale-105"
+                  style={{ backgroundColor: INK, color: CREAM }}
                 >
-                  <ChevronUp size={18} className="animate-bounce" style={{ color: 'rgba(255,255,255,0.8)' }} />
-                  <button
-                    onClick={handleUnlock}
-                    className="flex items-center gap-2 px-8 py-3 rounded-full text-sm font-medium tracking-[0.15em] transition-all hover:scale-105"
-                    style={{ backgroundColor: INK, color: CREAM }}
-                  >
-                    <Lock size={14} />
-                    {t.discover}
-                  </button>
-                </div>
+                  <Lock size={14} />
+                  {t.discover}
+                </button>
               </div>
             </div>
+          </div>
+
+          {/* real Wegemo widget, kept off-screen and triggered programmatically on unlock */}
+          <div
+            ref={wegemoRef}
+            style={{ position: 'fixed', top: '-9999px', left: '-9999px', width: '320px', height: '600px' }}
+          >
+            <div
+              data-wegemo="8d26d2e2-4f0d-41be-9743-634a677e7873"
+              data-table="0"
+              data-label="🛒 Commander"
+              data-color={INK}
+              data-name="Médina Tacos"
+              style={{ minHeight: '600px', width: '100%' }}
+            ></div>
           </div>
         </div>
 
