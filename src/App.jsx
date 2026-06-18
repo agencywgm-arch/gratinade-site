@@ -296,14 +296,6 @@ const LaGratinade = () => {
                   <Ribbon className="mt-2">{t.subtitle}</Ribbon>
                 </div>
 
-                <div className="grid grid-cols-2 gap-1.5 w-full px-2">
-                  {[gratinade1, gratinade5, gratinade2, gratinade3].map((src, i) => (
-                    <div key={i} className="aspect-square overflow-hidden rounded-md shadow-sm">
-                      <img src={src} alt={`La Gratinade ${i + 1}`} className="w-full h-full object-cover" />
-                    </div>
-                  ))}
-                </div>
-
                 <div className="flex flex-col items-center gap-3">
                   <ChevronUp size={18} className="animate-bounce" style={{ color: 'rgba(26,26,26,0.5)' }} />
                   <button
@@ -333,6 +325,14 @@ const LaGratinade = () => {
               style={{ minHeight: '600px', width: '100%' }}
             ></div>
           </div>
+        </div>
+
+        <div className="grid grid-cols-2 gap-2 md:gap-3 max-w-md mx-auto mb-8 md:mb-12">
+          {[gratinade1, gratinade2, gratinade3, gratinade4, gratinade5].map((src, i) => (
+            <div key={i} className={`aspect-square overflow-hidden rounded-lg shadow-md ${i === 4 ? 'col-span-2' : ''}`}>
+              <img src={src} alt={`La Gratinade ${i + 1}`} className="w-full h-full object-cover" />
+            </div>
+          ))}
         </div>
 
         <div className="text-center p-4 md:p-6 rounded border" style={{ backgroundColor: '#fff', borderColor: 'rgba(26,26,26,0.12)' }}>
