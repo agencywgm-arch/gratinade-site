@@ -1,9 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Instagram, Globe, ShoppingCart, Menu, X, ChevronUp, Lock } from 'lucide-react';
-import gratinade1 from './assets/gallery/gratinade-1.jpg';
-import gratinade2 from './assets/gallery/gratinade-2.jpg';
-import gratinade3 from './assets/gallery/gratinade-3.jpg';
-import gratinade4 from './assets/gallery/gratinade-4.jpg';
+import phoneMenu from './assets/gallery/phone-menu.png';
 
 const INK = '#1a1a1a';
 const CREAM = '#f8f4ec';
@@ -287,20 +284,7 @@ const LaGratinade = () => {
               />
 
               {/* lock screen */}
-              <div className="absolute inset-0 flex flex-col">
-                {[gratinade1, gratinade2, gratinade3, gratinade4].map((src, i) => (
-                  <img key={i} src={src} alt={`La Gratinade ${i + 1}`} className="w-full flex-1 object-cover" />
-                ))}
-              </div>
-
-              <div
-                className="absolute top-0 left-0 right-0 flex items-center justify-center pt-6 pb-3"
-                style={{ background: 'linear-gradient(to bottom, rgba(0,0,0,0.45), transparent)' }}
-              >
-                <span style={{ fontFamily: "'Allura', cursive", fontSize: '1.75rem', color: '#fff' }}>
-                  {t.brand}
-                </span>
-              </div>
+              <img src={phoneMenu} alt={t.brand} className="absolute inset-0 w-full h-full object-cover" />
 
               <div
                 className="absolute bottom-0 left-0 right-0 flex flex-col items-center gap-3 pt-10 pb-6"
