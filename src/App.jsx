@@ -267,22 +267,13 @@ const LaGratinade = () => {
             className="relative transition-all duration-700 ease-in-out"
             style={{
               width: 'min(320px, 80vw)',
-              aspectRatio: '9 / 19.5',
+              aspectRatio: '858 / 1832',
               opacity: unlocked ? 0 : 1,
               transform: unlocked ? 'scale(0.92)' : 'scale(1)',
               pointerEvents: unlocked ? 'none' : 'auto'
             }}
           >
-            <div
-              className="absolute inset-0 rounded-[2.5rem] overflow-hidden shadow-2xl"
-              style={{ border: `10px solid ${INK}`, backgroundColor: CREAM }}
-            >
-              {/* notch */}
-              <div
-                className="absolute top-0 left-1/2 -translate-x-1/2 w-28 h-5 rounded-b-2xl z-30"
-                style={{ backgroundColor: INK }}
-              />
-
+            <div className="absolute inset-0 rounded-[2.5rem] overflow-hidden shadow-2xl">
               {/* lock screen */}
               <img src={phoneMenu} alt={t.brand} className="absolute inset-0 w-full h-full object-cover" />
 
