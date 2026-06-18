@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Site vitrine multilingue pour La Gratinade",
   "private": true,
-  "homepage": "https://agencywgm-arch.github.io/gratinade-site",
+  "homepage": "https://la-gratinade.com",
   "dependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
