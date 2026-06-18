@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Instagram, Globe, ShoppingCart, Menu, X, ChevronUp, Lock } from 'lucide-react';
 
 const INK = '#1a1a1a';
@@ -12,6 +12,7 @@ const LaGratinade = () => {
   const [unlocked, setUnlocked] = useState(false);
   const [loaderVisible, setLoaderVisible] = useState(true);
   const [loaderFading, setLoaderFading] = useState(false);
+  const wegemoRef = useRef(null);
 
   const translations = {
     fr: {
@@ -88,6 +89,18 @@ const LaGratinade = () => {
   const scrollToMenu = () => {
     document.getElementById('menu').scrollIntoView({ behavior: 'smooth' });
     setShowMobileMenu(false);
+  };
+
+  // The Wegemo widget renders its own launcher button and opens its menu in a
+  // separate full-screen modal, so we keep the real widget hidden off-screen
+  // and forward the click from our decorative "unlock" button to it.
+  const handleUnlock = () => {
+    setUnlocked(true);
+    setTimeout(() => {
+      const el = wegemoRef.current;
+      const trigger = el?.querySelector('button, a, [role="button"]') || el;
+      trigger?.click();
+    }, 550);
   };
 
   // Ribbon-style banner echoing the storefront sign's "CUISINE GOURMANDE" subtitle
@@ -247,12 +260,18 @@ const LaGratinade = () => {
 
         <div className="flex justify-center mb-8 md:mb-12">
           <div
-            className="relative"
-            style={{ width: 'min(320px, 80vw)', aspectRatio: '9 / 19.5' }}
+            className="relative transition-all duration-700 ease-in-out"
+            style={{
+              width: 'min(320px, 80vw)',
+              aspectRatio: '9 / 19.5',
+              opacity: unlocked ? 0 : 1,
+              transform: unlocked ? 'scale(0.92)' : 'scale(1)',
+              pointerEvents: unlocked ? 'none' : 'auto'
+            }}
           >
             <div
               className="absolute inset-0 rounded-[2.5rem] overflow-hidden shadow-2xl"
-              style={{ border: `10px solid ${INK}`, backgroundColor: '#fff' }}
+              style={{ border: `10px solid ${INK}`, backgroundColor: CREAM }}
             >
               {/* notch */}
               <div
@@ -260,25 +279,8 @@ const LaGratinade = () => {
                 style={{ backgroundColor: INK }}
               />
 
-              {/* widget layer - always mounted so the embed script can bind to it */}
-              <div className="absolute inset-0 overflow-y-auto pt-7 px-3 pb-4">
-                <div
-                  data-wegemo="8d26d2e2-4f0d-41be-9743-634a677e7873"
-                  data-table="0"
-                  data-label="🛒 Commander"
-                  data-color={INK}
-                  data-name="Médina Tacos"
-                  style={{ minHeight: '100%', width: '100%' }}
-                ></div>
-              </div>
-
-              {/* lock screen overlay */}
-              <div
-                className={`absolute inset-0 z-20 flex flex-col items-center justify-between pt-16 pb-8 px-6 transition-all duration-700 ease-in-out ${
-                  unlocked ? 'opacity-0 -translate-y-full pointer-events-none' : 'opacity-100 translate-y-0'
-                }`}
-                style={{ backgroundColor: CREAM }}
-              >
+              {/* lock screen */}
+              <div className="absolute inset-0 flex flex-col items-center justify-between pt-16 pb-8 px-6">
                 <div className="text-center mt-6">
                   <span style={{ fontFamily: "'Allura', cursive", fontSize: '2.25rem', color: INK }}>
                     {t.brand}
@@ -289,7 +291,7 @@ const LaGratinade = () => {
                 <div className="flex flex-col items-center gap-3">
                   <ChevronUp size={18} className="animate-bounce" style={{ color: 'rgba(26,26,26,0.5)' }} />
                   <button
-                    onClick={() => setUnlocked(true)}
+                    onClick={handleUnlock}
                     className="flex items-center gap-2 px-8 py-3 rounded-full text-sm font-medium tracking-[0.15em] transition-all hover:scale-105"
                     style={{ backgroundColor: INK, color: CREAM }}
                   >
@@ -299,6 +301,21 @@ const LaGratinade = () => {
                 </div>
               </div>
             </div>
+          </div>
+
+          {/* real Wegemo widget, kept off-screen and triggered programmatically on unlock */}
+          <div
+            ref={wegemoRef}
+            style={{ position: 'fixed', top: '-9999px', left: '-9999px', width: '320px', height: '600px' }}
+          >
+            <div
+              data-wegemo="8d26d2e2-4f0d-41be-9743-634a677e7873"
+              data-table="0"
+              data-label="🛒 Commander"
+              data-color={INK}
+              data-name="Médina Tacos"
+              style={{ minHeight: '600px', width: '100%' }}
+            ></div>
           </div>
         </div>
 
