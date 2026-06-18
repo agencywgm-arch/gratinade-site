@@ -4,7 +4,6 @@ import gratinade1 from './assets/gallery/gratinade-1.jpg';
 import gratinade2 from './assets/gallery/gratinade-2.jpg';
 import gratinade3 from './assets/gallery/gratinade-3.jpg';
 import gratinade4 from './assets/gallery/gratinade-4.jpg';
-import gratinade5 from './assets/gallery/gratinade-5.jpg';
 
 const INK = '#1a1a1a';
 const CREAM = '#f8f4ec';
@@ -288,33 +287,34 @@ const LaGratinade = () => {
               />
 
               {/* lock screen */}
-              <div className="absolute inset-0 flex flex-col items-center justify-between pt-16 pb-8 px-6">
-                <div className="text-center mt-6">
-                  <span style={{ fontFamily: "'Allura', cursive", fontSize: '2.25rem', color: INK }}>
-                    {t.brand}
-                  </span>
-                  <Ribbon className="mt-2">{t.subtitle}</Ribbon>
-                </div>
+              <div className="absolute inset-0 flex flex-col">
+                {[gratinade1, gratinade2, gratinade3, gratinade4].map((src, i) => (
+                  <img key={i} src={src} alt={`La Gratinade ${i + 1}`} className="w-full flex-1 object-cover" />
+                ))}
+              </div>
 
-                <div className="flex flex-col gap-1 w-full px-2">
-                  {[gratinade1, gratinade2, gratinade3, gratinade4, gratinade5].map((src, i) => (
-                    <div key={i} className="w-full overflow-hidden rounded-md shadow-sm" style={{ height: '72px' }}>
-                      <img src={src} alt={`La Gratinade ${i + 1}`} className="w-full h-full object-cover" />
-                    </div>
-                  ))}
-                </div>
+              <div
+                className="absolute top-0 left-0 right-0 flex items-center justify-center pt-6 pb-3"
+                style={{ background: 'linear-gradient(to bottom, rgba(0,0,0,0.45), transparent)' }}
+              >
+                <span style={{ fontFamily: "'Allura', cursive", fontSize: '1.75rem', color: '#fff' }}>
+                  {t.brand}
+                </span>
+              </div>
 
-                <div className="flex flex-col items-center gap-3">
-                  <ChevronUp size={18} className="animate-bounce" style={{ color: 'rgba(26,26,26,0.5)' }} />
-                  <button
-                    onClick={handleUnlock}
-                    className="flex items-center gap-2 px-8 py-3 rounded-full text-sm font-medium tracking-[0.15em] transition-all hover:scale-105"
-                    style={{ backgroundColor: INK, color: CREAM }}
-                  >
-                    <Lock size={14} />
-                    {t.discover}
-                  </button>
-                </div>
+              <div
+                className="absolute bottom-0 left-0 right-0 flex flex-col items-center gap-3 pt-10 pb-6"
+                style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.55), transparent)' }}
+              >
+                <ChevronUp size={18} className="animate-bounce" style={{ color: 'rgba(255,255,255,0.8)' }} />
+                <button
+                  onClick={handleUnlock}
+                  className="flex items-center gap-2 px-8 py-3 rounded-full text-sm font-medium tracking-[0.15em] transition-all hover:scale-105"
+                  style={{ backgroundColor: INK, color: CREAM }}
+                >
+                  <Lock size={14} />
+                  {t.discover}
+                </button>
               </div>
             </div>
           </div>
