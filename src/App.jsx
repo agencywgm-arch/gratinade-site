@@ -298,7 +298,7 @@ const LaGratinade = () => {
 
                 <div className="flex flex-col gap-1 w-full px-2">
                   {[gratinade1, gratinade2, gratinade3, gratinade4, gratinade5].map((src, i) => (
-                    <div key={i} className="w-full overflow-hidden rounded-md shadow-sm" style={{ height: '28px' }}>
+                    <div key={i} className="w-full overflow-hidden rounded-md shadow-sm" style={{ height: '48px' }}>
                       <img src={src} alt={`La Gratinade ${i + 1}`} className="w-full h-full object-cover" />
                     </div>
                   ))}
