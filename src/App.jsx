@@ -1,5 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Instagram, Globe, ShoppingCart, Menu, X, ChevronUp, Lock } from 'lucide-react';
+import gratinade1 from './assets/gallery/gratinade-1.jpg';
+import gratinade2 from './assets/gallery/gratinade-2.jpg';
+import gratinade3 from './assets/gallery/gratinade-3.jpg';
+import gratinade4 from './assets/gallery/gratinade-4.jpg';
 
 const INK = '#1a1a1a';
 const CREAM = '#f8f4ec';
@@ -259,6 +263,14 @@ const LaGratinade = () => {
           <h2 className="text-3xl md:text-5xl tracking-tight" style={{ fontFamily: isArabic ? "'Cormorant Garamond', serif" : "'Allura', cursive", color: INK }}>
             {t.menu}
           </h2>
+        </div>
+
+        <div className="grid grid-cols-2 gap-2 md:gap-3 max-w-md mx-auto mb-8 md:mb-12">
+          {[gratinade1, gratinade2, gratinade3, gratinade4].map((src, i) => (
+            <div key={i} className="aspect-square overflow-hidden rounded-lg shadow-md">
+              <img src={src} alt={`La Gratinade ${i + 1}`} className="w-full h-full object-cover" />
+            </div>
+          ))}
         </div>
 
         <div className="flex justify-center mb-8 md:mb-12">
