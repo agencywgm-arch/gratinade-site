@@ -296,9 +296,9 @@ const LaGratinade = () => {
                   <Ribbon className="mt-2">{t.subtitle}</Ribbon>
                 </div>
 
-                <div className="grid grid-cols-3 gap-1 w-full px-2">
+                <div className="flex flex-col gap-1 w-full px-2">
                   {[gratinade1, gratinade2, gratinade3, gratinade4, gratinade5].map((src, i) => (
-                    <div key={i} className="aspect-square overflow-hidden rounded-md shadow-sm" style={{ maxHeight: '60px' }}>
+                    <div key={i} className="w-full overflow-hidden rounded-md shadow-sm" style={{ height: '28px' }}>
                       <img src={src} alt={`La Gratinade ${i + 1}`} className="w-full h-full object-cover" />
                     </div>
                   ))}
