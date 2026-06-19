@@ -1,9 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Instagram, Globe, ShoppingCart, Menu, X, ChevronUp, Lock } from 'lucide-react';
-import gratinade1 from './assets/gallery/gratinade-1.jpg';
-import gratinade2 from './assets/gallery/gratinade-2.jpg';
-import gratinade3 from './assets/gallery/gratinade-3.jpg';
-import gratinade4 from './assets/gallery/gratinade-4.jpg';
+import phoneMenu from './assets/gallery/phone-menu.png';
 
 const INK = '#1a1a1a';
 const CREAM = '#f8f4ec';
@@ -32,8 +29,7 @@ const LaGratinade = () => {
       selection: 'NOTRE SÉLECTION',
       menu: 'MENU COMPLET',
       contact: 'NOUS CONTACTER',
-      followUs: 'Retrouvez-nous sur les réseaux sociaux',
-      dishNames: ['Tacos Gratiné', 'Riz Gratiné', 'Pâtes Gratinées', 'Poulet Crispy']
+      followUs: 'Retrouvez-nous sur les réseaux sociaux'
     },
     en: {
       brand: 'La Gratinade',
@@ -48,8 +44,7 @@ const LaGratinade = () => {
       selection: 'OUR SELECTION',
       menu: 'FULL MENU',
       contact: 'CONTACT US',
-      followUs: 'Follow us on social media',
-      dishNames: ['Baked Tacos', 'Baked Rice', 'Baked Pasta', 'Crispy Chicken']
+      followUs: 'Follow us on social media'
     },
     ar: {
       brand: 'لا جراتيناد',
@@ -64,8 +59,7 @@ const LaGratinade = () => {
       selection: 'اختيارنا',
       menu: 'القائمة الكاملة',
       contact: 'اتصل بنا',
-      followUs: 'تابعنا على وسائل التواصل',
-      dishNames: ['تاكوس مخبوز', 'أرز مخبوز', 'معكرونة مخبوزة', 'دجاج كرسبي']
+      followUs: 'تابعنا على وسائل التواصل'
     }
   };
 
@@ -273,51 +267,15 @@ const LaGratinade = () => {
             className="relative transition-all duration-700 ease-in-out"
             style={{
               width: 'min(320px, 80vw)',
-              aspectRatio: '9 / 19.5',
+              aspectRatio: '858 / 1832',
               opacity: unlocked ? 0 : 1,
               transform: unlocked ? 'scale(0.92)' : 'scale(1)',
               pointerEvents: unlocked ? 'none' : 'auto'
             }}
           >
-            <div
-              className="absolute inset-0 rounded-[2.5rem] overflow-hidden shadow-2xl"
-              style={{ border: `10px solid ${INK}` }}
-            >
-              {/* notch */}
-              <div
-                className="absolute top-0 left-1/2 -translate-x-1/2 w-28 h-5 rounded-b-2xl z-30"
-                style={{ backgroundColor: INK }}
-              />
-
+            <div className="absolute inset-0 rounded-[2.5rem] overflow-hidden shadow-2xl">
               {/* lock screen */}
-              <div className="absolute inset-0 flex flex-col">
-                {[gratinade1, gratinade2, gratinade3, gratinade4].map((src, i) => (
-                  <div key={i} className="relative w-full flex-1 overflow-hidden">
-                    <img src={src} alt={t.dishNames[i]} className="absolute inset-0 w-full h-full object-cover" />
-                    <div
-                      className="absolute inset-0 flex flex-col items-center justify-center text-center px-4"
-                      style={{ background: 'linear-gradient(to bottom, rgba(0,0,0,0.15), rgba(0,0,0,0.35))' }}
-                    >
-                      <span className="text-[10px] tracking-[0.3em]" style={{ color: 'rgba(255,255,255,0.85)' }}>✦</span>
-                      <span
-                        className="mt-1 leading-tight font-semibold tracking-[0.1em] uppercase"
-                        style={{ fontFamily: "'Montserrat', sans-serif", fontSize: '1.15rem', color: '#fff' }}
-                      >
-                        {t.dishNames[i]}
-                      </span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              <div
-                className="absolute top-0 left-0 right-0 flex items-center justify-center pt-6 pb-3 z-30"
-                style={{ background: 'linear-gradient(to bottom, rgba(0,0,0,0.45), transparent)' }}
-              >
-                <span style={{ fontFamily: "'Allura', cursive", fontSize: '1.5rem', color: '#fff' }}>
-                  {t.brand}
-                </span>
-              </div>
+              <img src={phoneMenu} alt={t.brand} className="absolute inset-0 w-full h-full object-cover" />
 
               <div
                 className="absolute bottom-0 left-0 right-0 flex flex-col items-center gap-3 pt-10 pb-6"
