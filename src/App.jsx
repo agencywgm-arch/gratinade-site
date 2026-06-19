@@ -60,11 +60,29 @@ const LaGratinade = () => {
       menu: 'القائمة الكاملة',
       contact: 'اتصل بنا',
       followUs: 'تابعنا على وسائل التواصل'
+    },
+    pt: {
+      brand: 'La Gratinade',
+      subtitle: 'Cozinha Gourmet',
+      tagline: 'Tacos saborosos, hambúrgueres gourmet e especialidades do momento.\nIngredientes premium, sabores autênticos e uma cozinha generosa\npara encantar os paladares mais exigentes.',
+      discover: 'PEÇA AGORA',
+      qualities: [
+        { title: 'Sabor', text: 'Ingredientes premium selecionados com cuidado para cada criação' },
+        { title: 'Qualidade', text: 'Carne de açougue, aves e molhos caseiros generosos' },
+        { title: 'Generosidade', text: 'Porções abundantes preparadas com paixão em cada pedido' }
+      ],
+      selection: 'NOSSA SELEÇÃO',
+      menu: 'MENU COMPLETO',
+      contact: 'CONTATE-NOS',
+      followUs: 'Siga-nos nas redes sociais'
     }
   };
 
   const t = translations[language];
   const isArabic = language === 'ar';
+  const LANGUAGES = ['fr', 'en', 'ar', 'pt'];
+  const langName = (lang) =>
+    lang === 'fr' ? 'Français' : lang === 'en' ? 'English' : lang === 'pt' ? 'Português' : 'العربية';
 
   useEffect(() => {
     const script = document.createElement('script');
@@ -143,7 +161,7 @@ const LaGratinade = () => {
               La Gratinade
             </span>
             <div className="mt-3 text-[10px] tracking-[0.35em]" style={{ color: 'rgba(26,26,26,0.5)' }}>
-              {language === 'ar' ? 'جاري التحميل' : language === 'en' ? 'LOADING' : 'CHARGEMENT'}
+              {language === 'ar' ? 'جاري التحميل' : language === 'en' ? 'LOADING' : language === 'pt' ? 'CARREGANDO' : 'CHARGEMENT'}
             </div>
           </div>
         </div>
@@ -165,7 +183,7 @@ const LaGratinade = () => {
               </button>
               {showLangMenu && (
                 <div className="absolute right-0 mt-2 rounded-lg overflow-hidden z-50 shadow-lg" style={{ backgroundColor: CREAM, border: '1px solid rgba(26,26,26,0.15)' }}>
-                  {['fr', 'en', 'ar'].map(lang => (
+                  {LANGUAGES.map(lang => (
                     <button
                       key={lang}
                       onClick={() => {
@@ -175,7 +193,7 @@ const LaGratinade = () => {
                       className="w-full px-6 py-2 text-left hover:bg-black/5 transition text-sm"
                       style={{ color: language === lang ? BRASS : INK }}
                     >
-                      {lang === 'fr' ? 'Français' : lang === 'en' ? 'English' : 'العربية'}
+                      {langName(lang)}
                     </button>
                   ))}
                 </div>
@@ -198,13 +216,13 @@ const LaGratinade = () => {
           <div className="md:hidden border-t p-4 space-y-3" style={{ backgroundColor: CREAM, borderColor: 'rgba(26,26,26,0.12)' }}>
             <button
               onClick={() => {
-                setLanguage(language === 'fr' ? 'en' : language === 'en' ? 'ar' : 'fr');
+                setLanguage(LANGUAGES[(LANGUAGES.indexOf(language) + 1) % LANGUAGES.length]);
                 setShowMobileMenu(false);
               }}
               className="w-full px-4 py-2 text-left hover:bg-black/5 rounded text-sm"
               style={{ color: BRASS }}
             >
-              🌍 {language === 'fr' ? 'Français' : language === 'en' ? 'English' : 'العربية'}
+              🌍 {langName(language)}
             </button>
             <button onClick={scrollToMenu} className="w-full px-4 py-2 text-left hover:bg-black/5 rounded text-sm">
               {t.discover}
@@ -315,6 +333,7 @@ const LaGratinade = () => {
             {language === 'fr' && '📲 Commandez directement'}
             {language === 'en' && '📲 Order directly'}
             {language === 'ar' && '📲 اطلب مباشرة'}
+            {language === 'pt' && '📲 Peça diretamente'}
           </p>
         </div>
       </section>
