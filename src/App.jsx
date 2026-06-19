@@ -33,7 +33,7 @@ const LaGratinade = () => {
       menu: 'MENU COMPLET',
       contact: 'NOUS CONTACTER',
       followUs: 'Retrouvez-nous sur les réseaux sociaux',
-      dishNames: ['Pain Gratiné', 'Pain Gratiné Gourmand', 'Pâtes Gratinées', 'Poulet Crispy']
+      dishNames: ['Tacos Gratiné', 'Riz Gratiné', 'Pâtes Gratinées', 'Poulet Crispy']
     },
     en: {
       brand: 'La Gratinade',
@@ -49,7 +49,7 @@ const LaGratinade = () => {
       menu: 'FULL MENU',
       contact: 'CONTACT US',
       followUs: 'Follow us on social media',
-      dishNames: ['Baked Garlic Bread', 'Gourmet Baked Bread', 'Baked Pasta', 'Crispy Chicken']
+      dishNames: ['Baked Tacos', 'Baked Rice', 'Baked Pasta', 'Crispy Chicken']
     },
     ar: {
       brand: 'لا جراتيناد',
@@ -65,7 +65,7 @@ const LaGratinade = () => {
       menu: 'القائمة الكاملة',
       contact: 'اتصل بنا',
       followUs: 'تابعنا على وسائل التواصل',
-      dishNames: ['خبز بالثوم المخبوز', 'خبز مخبوز فاخر', 'معكرونة مخبوزة', 'دجاج كرسبي']
+      dishNames: ['تاكوس مخبوز', 'أرز مخبوز', 'معكرونة مخبوزة', 'دجاج كرسبي']
     }
   };
 
