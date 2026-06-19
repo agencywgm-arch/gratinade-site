@@ -327,7 +327,7 @@ const LaGratinade = () => {
         <div className="text-center">
           <div className="flex justify-center gap-6 md:gap-8 mb-6 md:mb-8">
             <a
-              href="https://www.instagram.com/"
+              href="https://www.instagram.com/bitesmedina?utm_source=qr"
               target="_blank"
               rel="noopener noreferrer"
               className="p-3 md:p-4 rounded-full border transition hover:bg-black/5"
